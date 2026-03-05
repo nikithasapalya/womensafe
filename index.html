@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WomenSafe - Empowering Safety & Awareness</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main id="login-page" class="page-container">
+        <div class="login-container">
+            <h1>WomenSafe</h1>
+            <p class="tagline">Empowering Women with Safety & Awareness</p>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <small class="error-message" id="email-error"></small>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <small class="error-message" id="password-error"></small>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p class="form-footer">Don't have an account? <a href="#">Sign Up</a></p>
+            </form>
+        </div>
+    </main>
+
+    <div id="app-dashboard" class="hidden">
+        <header>
+            <nav class="navbar">
+                <a href="#" class="nav-logo">WomenSafe</a>
+                <ul class="nav-menu">
+                    <li><a href="#dashboard-home">Home</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#ngos">NGOs</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="dashboard-home" class="page-container">
+            <h2>Welcome to your Dashboard</h2>
+            <p>Your safety is our priority. Access resources and tools below.</p>
+            
+            <div class="sos-container">
+                <button id="sos-button" class="sos-button">SOS</button>
+                <p>Press in case of emergency</p>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>Emergency Contacts</h3>
+                    <p>Set up trusted contacts to alert in an emergency.</p>
+                </div>
+                <div class="card">
+                    <h3>Safer Zone Map</h3>
+                    <p>Navigate to nearby police stations, shelters, and safe zones.</p>
+                </div>
+                <div class="card">
+                    <h3>File a Complaint</h3>
+                    <p>Report incidents of cyberbullying, stalking, or other issues.</p>
+                </div>
+                <div class="card">
+                    <h3>Laws & Rights</h3>
+                    <p>Know your legal rights and the justice-seeking process.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 WomenSafe. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <audio id="siren-sound" src="siren.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

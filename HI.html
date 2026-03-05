@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TasteBite Restaurant</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    /* ---------- COLORS & RESET ---------- */
+    :root {
+      --primary: #d62828;
+      --secondary: #fcbf49;
+      --dark: #1b1b1b;
+      --light: #fff8f0;
+      --white: #ffffff;
+      --premium: #ffd700; /* Gold color for premium */
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: "Poppins", sans-serif;
+      color: var(--dark);
+      background: var(--light);
+      scroll-behavior: smooth;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ---------- NAVBAR ---------- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--dark);
+      color: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      animation: slideDown 1s ease;
+    }
+    header h1 {
+      color: var(--secondary);
+      font-size: 1.6rem;
+      letter-spacing: 1px;
+    }
+    nav ul {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center; /* Align cart icon */
+    }
+    nav li {
+      transition: transform 0.3s;
+    }
+    nav li:hover {
+      transform: scale(1.1);
+    }
+    /* CART ICON STYLES */
+    .cart-icon {
+      position: relative;
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: var(--primary);
+      color: var(--white);
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      animation: pulse 1s infinite;
+    }
+    /* CART ANIMATION */
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(214, 40, 40, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0); }
+    }
+
+
+    /* ---------- HERO ---------- */
+    .hero {
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 0 1rem;
+      animation: fadeIn 2s ease;
+    }
+    .hero h2 {
+      font-size: 3rem;
+      color: var(--secondary);
+    }
+    .hero p {
+      max-width: 600px;
+      margin: 1rem 0;
+      font-size: 1.2rem;
+    }
+    .btn {
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 1.6rem;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: all 0.3s;
+      border: none; /* Ensure button has no default border */
+      cursor: pointer;
+      display: inline-block;
+      text-align: center;
+    }
+    .btn:hover {
+      background: var(--secondary);
+      color: var(--dark);
+      transform: scale(1.05);
+    }
+    /* Advanced Button Styles */
+    .btn-secondary {
+        background: none;
+        color: var(--secondary);
+        border: 2px solid var(--secondary);
+        margin-left: 1rem;
+    }
+    .btn-secondary:hover {
+        background: var(--secondary);
+        color: var(--dark);
+        border-color: var(--secondary);
+    }
+    /* Floating Action Button (FAB) */
+    .fab {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--primary);
+
+color: var(--white);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        z-index: 999;
+        transition: transform 0.3s;
+    }
+    .fab:hover {
+        transform: scale(1.1) rotate(5deg);
+        background: var(--secondary);
+        color: var(--dark);
+    }
+
+
+    /* ---------- MENU SECTION ---------- */
+    section {
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    h2.section-title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: var(--primary);
+      position: relative;
+    }
+    h2.section-title::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--secondary);
+      margin: 0.5rem auto;
+      border-radius: 2px;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .menu-item {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      position: relative; /* Needed for premium badge positioning */
+    }
+    .menu-item:nth-child(odd) { animation-delay: 0.3s; }
+    .menu-item:nth-child(even) { animation-delay: 0.6s; }
+    .menu-item:hover {
+      transform: translateY(-5px) scale(1.02); /* Enhanced hover */
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .menu-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .menu-item-details {
+      padding: 1rem;
+    }
+    .menu-item h3 {
+      margin: 0.8rem 0 0.2rem 0;
+      color: var(--primary);
+    }
+    .menu-item p {
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    /* PREMIUM BADGE STYLES */
+    .premium-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--premium);
+      color: var(--dark);
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      transform: rotate(5deg);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* ITEM BUTTONS STYLES */
+    .item-actions {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 10px;
+    }
+    .item-actions .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    .price {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--dark);
+    }
+
+/* ---------- ABOUT ---------- */
+    .about {
+      background: var(--white);
+      border-radius: 12px;
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      animation: fadeUp 1.5s ease forwards;
+    }
+    .about p {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: #444;
+    }
+    /* ---------- RESERVATION FORM ---------- */
+    .reserve {
+      background: var(--dark);
+      color: var(--white);
+    }
+    form {
+      max-width: 600px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    input, textarea, button {
+      padding: 0.8rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    input, textarea {
+      width: 100%;
+    }
+    button[type="submit"] {
+      background: var(--secondary);
+      font-weight: bold;
+      color: var(--dark);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    button[type="submit"]:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      background: var(--dark);
+      color: var(--white);
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+/* ---------- ANIMATIONS ---------- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 768px) {
+      .hero h2 { font-size: 2.2rem; }
+      header { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>TasteBite</h1>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#reserve">Reservation</a></li>
+        <li>
+            <div class="cart-icon" onclick="alert('Cart functionality coming soon!')">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">3</span>
+            </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <a href="#reserve" class="fab" title="Quick Reserve">
+      <i class="fas fa-calendar-alt"></i>
+  </a>
+
+  <section id="home" class="hero">
+    <h2>Welcome to TasteBite</h2>
+    <p>Experience fine dining with the warmth of home. Delicious meals, perfect ambiance, and unforgettable memories.</p>
+    <div>
+        <a href="#menu" class="btn">Explore Menu</a>
+        <a href="#about" class="btn btn-secondary">Our Story</a>
+    </div>
+  </section>
+
+<section id="menu">
+    <h2 class="section-title">Our Menu</h2>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <span class="premium-badge">PREMIUM</span>
+        <img src="https://imgs.search.brave.com/J3agiIeTth-glNp8LzmP6OhQgFefgdKdjiXhr6-wuag/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWM4LmRlcG9zaXRw/aG90b3MuY29tLzEy/NjI0MDEvMTAxOC9p/LzQ1MC9kZXBvc2l0/cGhvdG9zXzEwMTg3/NzkwLXN0b2NrLXBo/b3RvLWdyaWxsZWQt/Y2hpY2tlbi5qcGc" alt="Grilled Chicken">
+        <div class="menu-item-details">
+            <h3>Grilled Chicken</h3>
+            <p>Juicy and perfectly seasoned grilled chicken served with sides.</p>
+            <div class="item-actions">
+                <span class="price">$18.99</span>
+                <button class="btn" onclick="alert('Added Grilled Chicken to cart!')">
+                    <i class="fas fa-cart-plus"></i> Add
+                </button>
+            </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <img src="https://imgs.search.brave.com/2__l0CXEytiRbBjaI5elBvLaCnpNGkAuK_Se8AAbDcM/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/ZWVma29va3R6by5u/bC93cC1jb250ZW50/L3VwbG9hZHMvMjAy/NS8wNi9QYXN0YS1h/bGZyZWRvLXJlY2Vw/dC5qcGc" alt="Pasta Alfredo">
+        <div class="menu-item-details">
+            <h3>Pasta Alfredo</h3>
+            <p>Creamy fettuccine pasta tossed in our signature Alfredo sauce.</p>
+            <div class="item-actions">
+                <span class="price">$14.50</span>
+                <button class="btn" onclick="alert('Added Pasta Alfredo to cart!')">
+                    <i class="fas fa-cart-plus"></i> Add
+                </button>
+            </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <img src="https://imgs.search.brave.com/NZbjgMfizdc30Tf4iiT4t57PMMSdiAJtakA_lQERV3w/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tYWNs/ZW9kLTU4Lm15c2hv/cGlmeS5jb20vY2Ru/L3Nob3AvcHJvZHVj/dHMvZGVsdXhlY2hl/ZXNlYnVyZ2VyXzUz/MHhAMnguanBnP3Y9/MTYwOTE5ODMwOA" alt="Cheeseburger Deluxe">
+        <div class="menu-item-details">
+            <h3>Cheeseburger Deluxe</h3>
+            <p>Double patty, melted cheese, and crispy fries on the side.</p>
+            <div class="item-actions">
+                <span class="price">$11.75</span>
+
+<button class="btn" onclick="alert('Added Cheeseburger Deluxe to cart!')">
+                    <i class="fas fa-cart-plus"></i> Add
+                </button>
+            </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <span class="premium-badge">PREMIUM</span>
+        <img src="https://imgs.search.brave.com/ev1-cGM5_7eTOlHmKpsP4QOYY9russmpC5IjfRuPiZI/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzE2Lzg4LzIxLzYw/LzM2MF9GXzE2ODgy/MTYwNTdfTU5SM3B3/enR6NUF1RmRFZ2Jm/ekpxN05pOUN3em5v/VmYuanBn" alt="Chocolate Lava Cake">
+        <div class="menu-item-details">
+            <h3>Chocolate Lava Cake</h3>
+            <p>Warm, rich chocolate cake with molten center. Pure bliss.</p>
+            <div class="item-actions">
+                <span class="price">$8.00</span>
+                <button class="btn" onclick="alert('Added Chocolate Lava Cake to cart!')">
+                    <i class="fas fa-cart-plus"></i> Add
+                </button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2 class="section-title">About Us</h2>
+    <div class="about">
+      <p>At TasteBite, we blend traditional recipes with modern culinary art. Founded in 2015, we’ve been delighting food lovers with a passion for quality ingredients, inviting atmosphere, and exceptional service.</p>
+    </div>
+  </section>
+
+  <section id="reserve" class="reserve">
+    <h2 class="section-title">Reserve a Table</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Email Address" required>
+      <input type="number" placeholder="Number of Guests" required>
+      <textarea rows="4" placeholder="Special Requests"></textarea>
+      <button type="submit">Book Now</button>
+    </form>
+  </section>
+  <footer>
+    © 2025 TasteBite Restaurant | Designed with ❤️ by You
+  </footer>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.menu-btn {
+background-color: #040008;
+color: white;
+padding: 16px;
+font-weight: bolder;
+font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+border: none;
+}
+.dropdown-menu {
+position: relative;
+display: inline-block;
+}
+.menu-content {
+display: none;
+position: absolute;
+background-color: #3ff360;
+min-width: 110px;
+z-index: 1;
+}
+nav {
+background-color: #017575;
+}
+.links,
+.links-hidden {
+display: inline-block;
+color: rgb(255, 255, 255);
+padding: 8px 12px;
+text-decoration: none;
+font-size: 12px;
+}
+.links-hidden {
+display: block;
+}
+.links {
+display: inline-block;
+}
+.links-hidden:hover,
+.links:hover {
+transform: scale(1.2);
+}
+.dropdown-menu:hover .menu-content {
+display: block;
+}
+</style>
+</head>
+<body>
+<nav>
+<a class="links" href="#">Home</a>
+<a class="links" href="#">Services</a>
+<a class="links" href="#">Products</a>
+<div class="dropdown-menu">
+<button class="menu-btn">Dropdown
+<i class="fa fa-caret-down"></i>
+</button>
+<div class="menu-content">
+<a class="links-hidden" href="#">Contact Us</a>
+<a class="links-hidden" href="#">Visit Us</a>
+<a class="links-hidden" href="#">About Us</a>
+</div>
+</div>
+</nav>
+</body>
+</html>

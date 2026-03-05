@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WomenSafe - Empowering Safety & Awareness</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ======== General Setup & New Color Palette ======== */
+        :root {
+            --primary-color: #6a5acd; /* Slate Blue / Lavender */
+            --secondary-color: #ff69b4; /* Hot Pink */
+            --accent-color: #40e0d0; /* Turquoise */
+            --background-color: #fdf5f6; /* Very Light Pink/White */
+            --text-color: #333;
+            --white-color: #ffffff;
+            --danger-color: #E74C3C;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --border-radius: 15px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .hidden { display: none !important; }
+
+        .page-container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 2rem;
+            margin: 0 auto;
+        }
+
+        /* ======== Login Page Styling ======== */
+        #login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-container {
+            background: var(--white-color);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .login-container:hover { transform: translateY(-5px); }
+
+        .login-container h1 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-container .tagline {
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2);
+        }
+        
+        textarea { resize: vertical; min-height: 100px; }
+
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.8rem;
+            height: 1rem;
+            display: block;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #5a4ab6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-footer { margin-top: 1.5rem; font-size: 0.9rem; }
+        .form-footer a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
+
+        /* ======== Dashboard & App Styling ======== */
+        #app-dashboard { animation: fadeIn 0.5s ease-in-out; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: var(--white-color);
+            box-shadow: var(--shadow);
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); text-decoration: none; }
+        .nav-menu { list-style: none; display: flex; gap: 2rem; }
+        .nav-menu a { text-decoration: none; color: var(--text-color); font-weight: 600; transition: color 0.3s ease; }
+        .nav-menu a:hover { color: var(--primary-color); }
+        
+        #dashboard-home { text-align: center; }
+
+        /* SOS Button */
+        .sos-container { margin: 2rem 0; }
+        .sos-button {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: var(--danger-color);
+            color: var(--white-color);
+            border: 5px solid #f8c2c2;
+            font-size: 2rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
+            animation: pulse 2s infinite;
+            transition: transform 0.2s ease;
+        }
+        .sos-button:active { transform: scale(0.95); }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+
+        /* Dashboard Cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+        .card {
+            background: var(--white-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        .card h3 { color: var(--primary-color); margin-bottom: 0.5rem; }
+        .card p { color: #666; }
+        
+        .footer { padding: 1.5rem; margin-top: 3rem; background-color: var(--white-color); text-align: center; }
+
+        /* ======== Modal Styling ======== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content {
+            background: var(--white-color);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+        }
+        #modal-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* Specific Modal Content Styles */
+        .map-placeholder {
+            width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            background: #f0f0f0;
+        }
+        
+        .content-list { list-style: none; padding: 0; }
+        .content-list li {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            border-left: 5px solid var(--accent-color);
+        }
+        .content-list h4 { color: var(--primary-color); margin-bottom: 0.2rem; }
+        
+        .accordion-item {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 0.5rem;
+        }
+        .accordion-header {
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            color: var(--text-color);
+        }
+        .accordion-header::after {
+            content: '+';
+            position: absolute;
+            right: 1rem;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active::after { transform: rotate(45deg); }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 1rem;
+        }
+        .accordion-content p { padding-bottom: 1rem; }
+
+        /* Story/Blog Styles */
+        .story-feed { margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1rem; }
+        .story-post {
+            background-color: #fdfdfd;
+            border: 1px solid #eee;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+        }
+        .story-post h4 { color: var(--secondary-color); margin-bottom: 0.5rem; }
+
+        .confirmation-message {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .page-container { padding: 1rem; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .modal-content { padding: 1.5rem; }
+            #modal-title { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ======== Login/Signup Page ======== -->
+    <main id="login-page" class="page-container">
+        <div class="login-container">
+            <h1>WomenSafe</h1>
+            <p class="tagline">Empowering Women with Safety & Awareness</p>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <small class="error-message" id="email-error"></small>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <small class="error-message" id="password-error"></small>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p class="form-footer">Don't have an account? <a href="#">Sign Up</a></p>
+            </form>
+        </div>
+    </main>
+
+    <!-- ======== Main App Dashboard (Initially Hidden) ======== -->
+    <div id="app-dashboard" class="hidden">
+        <header>
+            <nav class="navbar">
+                <a href="#" class="nav-logo">WomenSafe</a>
+                <ul class="nav-menu">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">NGOs</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="dashboard-home" class="page-container">
+            <h2>Welcome to your Dashboard</h2>
+            <p>Your safety is our priority. Access resources and tools below.</p>
+            
+            <div class="sos-container">
+                <button id="sos-button" class="sos-button">SOS</button>
+                  <audio id="siren-sound" src="police-siren-397963.mp3" preload="auto"></audio>
+                <p>Press in case of emergency</p>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="card" data-modal-target="contacts">
+                    <h3>Emergency Contacts</h3>
+                    <p>Add trusted contacts to alert in an emergency.</p>
+                </div>
+                <div class="card" data-modal-target="map">
+                    <h3>Safer Zone Map</h3>
+                    <p>Find nearby police stations, shelters, and safe zones.</p>
+                </div>
+                <div class="card" data-modal-target="complaint">
+                    <h3>File a Complaint</h3>
+                    <p>Report cyberbullying, stalking, or other incidents confidentially.</p>
+                </div>
+                <div class="card" data-modal-target="laws">
+                    <h3>Women’s Laws & Rights</h3>
+                    <p>Know your legal rights and the process for seeking justice.</p>
+                </div>
+                <div class="card" data-modal-target="ngo">
+                    <h3>NGO Support</h3>
+                    <p>Connect with non-governmental organizations for support.</p>
+                </div>
+                <div class="card" data-modal-target="story">
+                    <h3>Share Your Story</h3>
+                    <p>Share experiences and read stories from the community.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 WomenSafe. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <!-- ======== Universal Modal Structure ======== -->
+    <div id="universal-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn">&times;</button>
+            <h2 id="modal-title"></h2>
+            <div id="modal-body">
+                <!-- Dynamic content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <audio id="siren-sound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3" preload="auto"></audio>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Element Selection ---
+        const loginPage = document.getElementById('login-page');
+        const appDashboard = document.getElementById('app-dashboard');
+        const loginForm = document.getElementById('login-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const emailError = document.getElementById('email-error');
+        const passwordError = document.getElementById('password-error');
+        const sosButton = document.getElementById('sos-button');
+        const sirenSound = document.getElementById('siren-sound');
+        let isSirenPlaying = false;
+
+        // Modal Elements
+        const universalModal = document.getElementById('universal-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const closeModalBtn = document.querySelector('.modal-close-btn');
+
+        // --- Login Form Validation & Submission ---
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            emailError.textContent = '';
+            passwordError.textContent = '';
+            let isValid = true;
+            if (!emailInput.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+                emailError.textContent = 'Please enter a valid email address.';
+                isValid = false;
+            }
+            if (!passwordInput.value || passwordInput.value.length < 6) {
+                passwordError.textContent = 'Password must be at least 6 characters long.';
+                isValid = false;
+            }
+            if (isValid) {
+                loginPage.classList.add('hidden');
+                appDashboard.classList.remove('hidden');
+            }
+        });
+
+        // --- SOS Siren Button Functionality ---
+        sosButton.addEventListener('click', () => {
+            if (isSirenPlaying) {
+                sirenSound.pause();
+                sirenSound.currentTime = 0;
+                sosButton.style.animation = 'pulse 2s infinite';
+            } else {
+                sirenSound.play().catch(error => console.error("Error playing sound:", error));
+                sosButton.style.animation = 'none';
+            }
+            isSirenPlaying = !isSirenPlaying;
+        });
+
+        // --- Universal Modal Controller ---
+        const openModal = () => universalModal.classList.add('active');
+        const closeModal = () => universalModal.classList.remove('active');
+
+        closeModalBtn.addEventListener('click', closeModal);
+        universalModal.addEventListener('click', (e) => {
+            if (e.target === universalModal) closeModal();
+        });
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', () => {
+                const target = card.dataset.modalTarget;
+                updateModalContent(target);
+                openModal();
+            });
+        });
+
+        // --- Dynamic Modal Content Population ---
+        const updateModalContent = (target) => {
+            let title = '';
+            let content = '';
+
+            switch (target) {
+                case 'contacts':
+                    title = 'Emergency Contacts';
+                    content = `
+                        <p>Add people you trust. Contacts are saved in your browser.</p>
+                        <form id="add-contact-form">
+                            <div class="input-group">
+                                <input type="text" id="contact-name" placeholder="Contact Name" required>
+                            </div>
+                            <div class="input-group">
+                                <input type="tel" id="contact-phone" placeholder="Phone Number" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Contact</button>
+                        </form>
+                        <ul id="contacts-list" class="content-list" style="margin-top: 2rem;"></ul>
+                    `;
+                    modalTitle.textContent = title;
+                    modalBody.innerHTML = content;
+                    setupContacts();
+                    break;
+                
+                case 'map':
+                    title = 'Safer Zone Navigation Map';
+                    content = `
+                        <p>This is a demo map showing nearby safe locations.</p>
+                        <img src="https://placehold.co/600x400/a9def9/333333?text=Safer+Zone+Map" alt="Safer Zone Map" class="map-placeholder">
+                        <ul class="content-list">
+                            <li><h4>City Police Station</h4><p>123 Safety Ave, Bengaluru</p></li>
+                            <li><h4>Hope Shelter for Women</h4><p>456 Respect Rd, Bengaluru</p></li>
+                            <li><h4>Community Health Clinic</h4><p>789 Wellness St, Bengaluru</p></li>
+                        </ul>
+                    `;
+                    modalTitle.textContent = title;
+                    modalBody.innerHTML = content;
+                    break;
+
+                case 'complaint':
+                    title = 'File a Complaint';
+                    content = `
+                        <p>Your report is confidential. This is a UI demo only.</p>
+                        <form id="complaint-form">
+                            <div class="input-group">
+                                <label for="complaint-type">Type of Complaint</label>
+                                <select id="complaint-type" required>
+                                    <option value="" disabled selected>Select a category...</option>
+                                    <option value="cyberbullying">Cyberbullying</option>
+                                    <option value="stalking">Stalking</option>
+                                    <option value="domestic">Domestic Issue</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="complaint-details">Details of Incident</label>
+                                <textarea id="complaint-details" placeholder="Please provide as much detail as possible..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Report</button>
+                        </form>
+                        <div id="complaint-confirmation" class="hidden"></div>
+                    `;
+                    modalTitle.textContent = title;
+                    modalBody.innerHTML = content;
+                    document.getElementById('complaint-form').addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        const confirmationDiv = document.getElementById('complaint-confirmation');
+                        confirmationDiv.innerHTML = `<div class="confirmation-message">Thank you. Your report has been submitted (DEMO).</div>`;
+                        confirmationDiv.classList.remove('hidden');
+                        e.target.classList.add('hidden');
+                    });
+                    break;
+
+                case 'laws':
+                    title = 'Know Your Laws & Rights';
+                    content = `
+                        <p>Click on a law to expand and learn more about your rights.</p>
+                        <div class="accordion">
+                            <div class="accordion-item">
+                                <button class="accordion-header">Protection from Domestic Violence Act, 2005</button>
+                                <div class="accordion-content">
+                                    <p>This act provides protection to women from violence within their homes. It covers physical, sexual, verbal, emotional, and economic abuse. You can get protection orders, residence orders, and monetary relief.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <button class="accordion-header">Sexual Harassment of Women at Workplace Act, 2013</button>
+                                <div class="accordion-content">
+                                    <p>This law protects women from sexual harassment at their place of work. Every employer is required to set up an Internal Complaints Committee (ICC) to address complaints.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <button class="accordion-header">The Dowry Prohibition Act, 1961</button>
+                                <div class="accordion-content">
+                                    <p>This act prohibits the act of giving or taking dowry. Demanding dowry is a punishable offense.</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    modalTitle.textContent = title;
+                    modalBody.innerHTML = content;
+                    document.querySelectorAll('.accordion-header').forEach(button => {
+                        button.addEventListener('click', () => {
+                            const content = button.nextElementSibling;
+                            button.classList.toggle('active');
+                            if (content.style.maxHeight) {
+                                content.style.maxHeight = null;
+                            } else {
+                                content.style.maxHeight = content.scrollHeight + "px";
+                            }
+                        });
+                    });
+                    break;
+                
+                case 'ngo':
+                    title = 'NGO Support';
+                    content = `
+                        <p>Connect with these organizations for help and support.</p>
+                        <ul class="content-list">
+                            <li><h4>Vimochana</h4><p>Provides support for women facing domestic violence. Based in Bengaluru.</p></li>
+                            <li><h4>Majlis Legal Centre</h4><p>A forum for women's rights discourse and legal initiatives.</p></li>
+                            <li><h4>Jagori</h4><p>Works on issues of women's safety, health, and education in urban and rural areas.</p></li>
+                        </ul>
+                    `;
+                    modalTitle.textContent = title;
+                    modalBody.innerHTML = content;
+                    break;
+
+                case 'story':
+                    title = 'Share Your Story';
+                    content = `
+                        <p>Sharing empowers others. Posts are anonymous and saved in your browser.</p>
+                        <form id="add-story-form">
+                            <div class="input-group">
+                                <input type="text" id="story-title" placeholder="A title for your story" required>
+                            </div>
+                            <div class="input-group">
+                                <textarea id="story-content" placeholder="Share your experience..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Post Anonymously</button>
+                        </form>
+                        <div class="story-feed">
+                            <h3>Community Stories</h3>
+                            <div id="story-list"></div>
+                        </div>
+                    `;
+                    modalTitle.textContent = title;
+                    modalBody.innerHTML = content;
+                    setupStories();
+                    break;
+            }
+        };
+
+        // --- Feature-Specific Logic ---
+
+        // Emergency Contacts
+        const setupContacts = () => {
+            const form = document.getElementById('add-contact-form');
+            const nameInput = document.getElementById('contact-name');
+            const phoneInput = document.getElementById('contact-phone');
+            const list = document.getElementById('contacts-list');
+            
+            const renderContacts = () => {
+                list.innerHTML = '';
+                const contacts = JSON.parse(localStorage.getItem('ws_contacts')) || [];
+                if(contacts.length === 0) {
+                    list.innerHTML = '<li>No contacts added yet.</li>';
+                    return;
+                }
+                contacts.forEach((contact, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${contact.name}</strong><span>${contact.phone}</span>`;
+                    list.appendChild(li);
+                });
+            };
+
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                const contacts = JSON.parse(localStorage.getItem('ws_contacts')) || [];
+                contacts.push({ name: nameInput.value, phone: phoneInput.value });
+                localStorage.setItem('ws_contacts', JSON.stringify(contacts));
+                renderContacts();
+                form.reset();
+            });
+            renderContacts();
+        };
+
+        // Story/Blog Logic
+        const setupStories = () => {
+            const form = document.getElementById('add-story-form');
+            const titleInput = document.getElementById('story-title');
+            const contentInput = document.getElementById('story-content');
+            const list = document.getElementById('story-list');
+
+            const renderStories = () => {
+                list.innerHTML = '';
+                const stories = JSON.parse(localStorage.getItem('ws_stories')) || [];
+                 if(stories.length === 0) {
+                    list.innerHTML = '<p>No stories have been shared yet. Be the first!</p>';
+                    return;
+                }
+                stories.slice().reverse().forEach(story => {
+                    const post = document.createElement('div');
+                    post.className = 'story-post';
+                    post.innerHTML = `<h4>${story.title}</h4><p>${story.content}</p>`;
+                    list.appendChild(post);
+                });
+            };
+
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                const stories = JSON.parse(localStorage.getItem('ws_stories')) || [];
+                stories.push({ title: titleInput.value, content: contentInput.value });
+                localStorage.setItem('ws_stories', JSON.stringify(stories));
+                renderStories();
+                form.reset();
+            });
+            renderStories();
+        };
+    });
+    </script>
+</body>
+</html>
